@@ -10,12 +10,16 @@ func Init(conf cmap.C) func(ctx *neo.Ctx, next neo.Next) {
 	allowCredentials := conf.StrOrDef("Access-Control-Allow-Credentials", "true")
 	allowMethods := conf.StrOrDef("Access-Control-Allow-Methods", "*")
 	allowHeaders := conf.StrOrDef("Access-Control-Allow-Headers", "*")
+	maxAge := conf.StrOrDef("Access-Control-Max-Age", "600")
+	exposeHeaders := conf.StrOrDef(" Access-Control-Expose-Headers", "")
 
 	return func(ctx *neo.Ctx, next neo.Next) {
 		ctx.Res.Header.Set("Access-Control-Allow-Origin", allowOrigin)
 		ctx.Res.Header.Set("Access-Control-Allow-Credentials", allowCredentials)
 		ctx.Res.Header.Set("Access-Control-Allow-Methods", allowMethods)
 		ctx.Res.Header.Set("Access-Control-Allow-Headers", allowHeaders)
+		ctx.Res.Header.Set("Access-Control-Max-Age", maxAge)
+		ctx.Res.Header.Set("Access-Control-Expose-Headers", exposeHeaders)
 
 		next()
 	}
