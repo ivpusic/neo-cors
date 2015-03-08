@@ -6,16 +6,16 @@ Enable CORS in your Neo application
 package main
 
 import (
-	"github.com/ivpusic/cmap"
 	"github.com/ivpusic/neo"
 	"github.com/ivpusic/neo-cors"
 )
 
 func main() {
 	app := neo.App()
-	app.Use(cors.Init(cmap.C{}))
+	app.Use(cors.Init())
 	app.Start()
 }
+
 ```
 
 ### Settings
@@ -29,13 +29,25 @@ Access-Control-Max-Age: 600
 Access-Control-Expose-Headers: ''
 ```
 
-To override default settings, pass custom settings to ``Init`` function.
+To override default settings, pass custom settings to ``InitWithOptions`` function.
 ```Go
-app.Use(cors.Init(cmap.C{
-  "Access-Control-Allow-Credentials": "false",
-  "Access-Control-Allow-Headers": "X-AUTH-HEADER",
-  // etc
-}))
+package main
+
+import (
+	"github.com/ivpusic/cmap"
+	"github.com/ivpusic/neo"
+	"github.com/ivpusic/neo-cors"
+)
+
+func main() {
+	app := neo.App()
+	app.Use(cors.InitWithOptions(cmap.C{
+  		"Access-Control-Allow-Credentials": "false",
+  		"Access-Control-Allow-Headers": "X-AUTH-HEADER",
+  		// etc
+	}))
+	app.Start()
+}
 ```
 
 # License
