@@ -5,21 +5,54 @@ import (
 	"github.com/ivpusic/neo"
 )
 
-func Init(conf cmap.C) func(ctx *neo.Ctx, next neo.Next) {
-	allowOrigin := conf.StrOrDef("Access-Control-Allow-Origin", "*")
-	allowCredentials := conf.StrOrDef("Access-Control-Allow-Credentials", "true")
-	allowMethods := conf.StrOrDef("Access-Control-Allow-Methods", "*")
-	allowHeaders := conf.StrOrDef("Access-Control-Allow-Headers", "*")
-	maxAge := conf.StrOrDef("Access-Control-Max-Age", "600")
-	exposeHeaders := conf.StrOrDef(" Access-Control-Expose-Headers", "")
+var (
+	allowOriginKey = "Access-Control-Allow-Origin"
+	allowOriginDef = "*"
+
+	allowCredentialsKey = "Access-Control-Allow-Credentials"
+	allowCredentialsDef = "true"
+
+	allowMethodsKey = "Access-Control-Allow-Methods"
+	allowMethodsDef = "*"
+
+	allowHeadersKey = "Access-Control-Allow-Headers"
+	allowHeadersDef = "*"
+
+	maxAgeKey = "Access-Control-Max-Age"
+	maxAgeDef = "600"
+
+	exposeHeadersKey = "Access-Control-Expose-Headers"
+	exposeHeadersDef = ""
+)
+
+func Init() func(ctx *neo.Ctx, next neo.Next) {
+	return func(ctx *neo.Ctx, next neo.Next) {
+		ctx.Res.Header.Set(allowOriginKey, allowOriginDef)
+		ctx.Res.Header.Set(allowCredentialsKey, allowCredentialsDef)
+		ctx.Res.Header.Set(allowMethodsKey, allowMethodsDef)
+		ctx.Res.Header.Set(allowHeadersKey, allowHeadersDef)
+		ctx.Res.Header.Set(maxAgeKey, maxAgeDef)
+		ctx.Res.Header.Set(exposeHeadersKey, exposeHeadersDef)
+
+		next()
+	}
+}
+
+func InitWithOptions(conf cmap.C) func(ctx *neo.Ctx, next neo.Next) {
+	allowOrigin := conf.StrOrDef(allowOriginKey, allowOriginDef)
+	allowCredentials := conf.StrOrDef(allowCredentialsKey, allowCredentialsDef)
+	allowMethods := conf.StrOrDef(allowMethodsKey, allowMethodsDef)
+	allowHeaders := conf.StrOrDef(allowHeadersKey, allowHeadersDef)
+	maxAge := conf.StrOrDef(maxAgeKey, maxAgeDef)
+	exposeHeaders := conf.StrOrDef(exposeHeadersKey, exposeHeadersDef)
 
 	return func(ctx *neo.Ctx, next neo.Next) {
-		ctx.Res.Header.Set("Access-Control-Allow-Origin", allowOrigin)
-		ctx.Res.Header.Set("Access-Control-Allow-Credentials", allowCredentials)
-		ctx.Res.Header.Set("Access-Control-Allow-Methods", allowMethods)
-		ctx.Res.Header.Set("Access-Control-Allow-Headers", allowHeaders)
-		ctx.Res.Header.Set("Access-Control-Max-Age", maxAge)
-		ctx.Res.Header.Set("Access-Control-Expose-Headers", exposeHeaders)
+		ctx.Res.Header.Set(allowOriginKey, allowOrigin)
+		ctx.Res.Header.Set(allowCredentialsKey, allowCredentials)
+		ctx.Res.Header.Set(allowMethodsKey, allowMethods)
+		ctx.Res.Header.Set(allowHeadersKey, allowHeaders)
+		ctx.Res.Header.Set(maxAgeKey, maxAge)
+		ctx.Res.Header.Set(exposeHeadersKey, exposeHeaders)
 
 		next()
 	}
