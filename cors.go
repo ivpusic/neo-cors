@@ -25,6 +25,7 @@ var (
 	exposeHeadersDef = ""
 )
 
+// Init neo-cors with default options
 func Init() func(ctx *neo.Ctx, next neo.Next) {
 	return func(ctx *neo.Ctx, next neo.Next) {
 		ctx.Res.Header.Set(allowOriginKey, allowOriginDef)
@@ -38,6 +39,7 @@ func Init() func(ctx *neo.Ctx, next neo.Next) {
 	}
 }
 
+// Init neo-cors with custom options
 func InitWithOptions(conf cmap.C) func(ctx *neo.Ctx, next neo.Next) {
 	allowOrigin := conf.StrOrDef(allowOriginKey, allowOriginDef)
 	allowCredentials := conf.StrOrDef(allowCredentialsKey, allowCredentialsDef)
