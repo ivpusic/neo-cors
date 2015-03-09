@@ -1,5 +1,5 @@
 # neo-cors
-Enable CORS in your Neo application
+Enable CORS in your [Neo](https://github.com/ivpusic/neo) application
 
 ## Example
 ```Go
