@@ -28,12 +28,12 @@ var (
 // Init neo-cors with default options
 func Init() func(ctx *neo.Ctx, next neo.Next) {
 	return func(ctx *neo.Ctx, next neo.Next) {
-		ctx.Res.Header.Set(allowOriginKey, allowOriginDef)
-		ctx.Res.Header.Set(allowCredentialsKey, allowCredentialsDef)
-		ctx.Res.Header.Set(allowMethodsKey, allowMethodsDef)
-		ctx.Res.Header.Set(allowHeadersKey, allowHeadersDef)
-		ctx.Res.Header.Set(maxAgeKey, maxAgeDef)
-		ctx.Res.Header.Set(exposeHeadersKey, exposeHeadersDef)
+		ctx.Res.Header().Set(allowOriginKey, allowOriginDef)
+		ctx.Res.Header().Set(allowCredentialsKey, allowCredentialsDef)
+		ctx.Res.Header().Set(allowMethodsKey, allowMethodsDef)
+		ctx.Res.Header().Set(allowHeadersKey, allowHeadersDef)
+		ctx.Res.Header().Set(maxAgeKey, maxAgeDef)
+		ctx.Res.Header().Set(exposeHeadersKey, exposeHeadersDef)
 
 		next()
 	}
@@ -49,12 +49,12 @@ func InitWithOptions(conf cmap.C) func(ctx *neo.Ctx, next neo.Next) {
 	exposeHeaders := conf.StrOrDef(exposeHeadersKey, exposeHeadersDef)
 
 	return func(ctx *neo.Ctx, next neo.Next) {
-		ctx.Res.Header.Set(allowOriginKey, allowOrigin)
-		ctx.Res.Header.Set(allowCredentialsKey, allowCredentials)
-		ctx.Res.Header.Set(allowMethodsKey, allowMethods)
-		ctx.Res.Header.Set(allowHeadersKey, allowHeaders)
-		ctx.Res.Header.Set(maxAgeKey, maxAge)
-		ctx.Res.Header.Set(exposeHeadersKey, exposeHeaders)
+		ctx.Res.Header().Set(allowOriginKey, allowOrigin)
+		ctx.Res.Header().Set(allowCredentialsKey, allowCredentials)
+		ctx.Res.Header().Set(allowMethodsKey, allowMethods)
+		ctx.Res.Header().Set(allowHeadersKey, allowHeaders)
+		ctx.Res.Header().Set(maxAgeKey, maxAge)
+		ctx.Res.Header().Set(exposeHeadersKey, exposeHeaders)
 
 		next()
 	}
